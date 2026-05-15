@@ -31,11 +31,18 @@ GitHub offers multiple ways to interact with your repository: "Add file", ✏️
 
 A template README file is available [here](https://github.com/HCEMM/acceleration-toolbox/blob/main/README_template.md). Either copy and paste the content, or download the file and upload it to your repository. This README file contains multiple sections that you can fill in with your information, such as your research interests, projects, and contact information. Feel free to customize it as you see fit!
 
-### 2.1. GitHub Actions and Pages
+### 2.1. GitHub Pages
 
-[GitHub Actions](https://github.com/features/actions) allows for automated workflows on GitHub, such as automated testing of your tools, or automated deployment into, e.g., package managers like Bioconda or PyPI. [GitHub Pages](https://docs.github.com/en/pages) allows to display a website directly from your repository, in a more friendly format than the README file. Both features require [generating a GitHub token](https://github.com/settings/tokens/new).
+[GitHub Pages](https://docs.github.com/en/pages) allows to display a website directly from your repository, and can be deployed from an HTML or a Markdown file.
 
+Steps to generate your recently created profile in a webpage:
+1. Create the `.github/workflows` folder on your repository;
+2. Create the `website.yml` file with the contents of [our repo example](https://github.com/HCEMM/acceleration-toolbox/blob/main/.github/workflows/website.yml);
+3. Go to `https://github.com/<username>/<repo>/settings/pages`;
+4. Under "Source", select the branch you want to use (e.g., "main");
+5. Click "Save" and wait for the page to be published. You will receive a URL where your page is available (e.g., `https://<your-github-username>.github.io/`).
 
+Check [the actions section](https://github.com/HCEMM/acceleration-toolbox/actions) of your repo to see live the construciton of the website.
 
 ## 3. GitHub in collaboration
 
@@ -47,7 +54,10 @@ Projects with multiple contributors require a more complex approach. In this sec
 
 3. Having a local copy on your system makes it easy to work on a project, especially by using [IDEs](https://github.com/HCEMM/sc-tutorials/blob/main/github_tutorial/README.md#21-in-an-ide). Use your preferred IDE to open the local repository, and the SC team will assist in discovering where version control is managed.
 
-### 2.1. Your task
+### 3.1. Testing is essential in collaborative or long-term projects
+
+It can also be one of the most boring parts of programming. [GitHub Actions](https://github.com/features/actions) allows for automated workflows on GitHub, such as automated testing of your tools, or automated deployment into, e.g., package managers like Bioconda or PyPI.
+
+### 3.2. Your task
 
 We have multiple groups for multiple different tasks. Each group will be working on a different part of the pipeline, and you will be collaborating with your group members to complete the task.
-

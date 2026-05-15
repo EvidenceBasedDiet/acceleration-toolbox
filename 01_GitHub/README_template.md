@@ -1,4 +1,4 @@
-# 🧬 Hi, I'm <INSERT NAME HERE> 👨‍🔬👩‍🔬
+# 🧬 Hi, I'm <INSERT SCIENCE-STAR NAME> 👨‍🔬👩‍🔬
 
 > "Turning biological chaos into structured data."
 
@@ -44,12 +44,10 @@
 
 ## 🧑‍🔬 Research Interests
 
-![cats](https://media3.giphy.com/media/hO58ejrIKFIkw/giphy.gif)
+![cats!](https://media3.giphy.com/media/hO58ejrIKFIkw/giphy.gif)
 
 ---
 
 ## </> Coding Activity
 
-![GitHub stats](https://github-readme-stats.vercel.app/api?username=iquasere&show_icons=true)
-
-<figure><embed src="https://wakatime.com/share/@9df5474f-901f-443d-9776-1058a3fcb90b/f804fbc3-dee2-405b-9668-17d8bd988382.svg"></embed></figure>
+![Wakatime stats](https://wakatime.com/share/@9df5474f-901f-443d-9776-1058a3fcb90b/f804fbc3-dee2-405b-9668-17d8bd988382.svg)
