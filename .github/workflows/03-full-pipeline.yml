@@ -23,7 +23,7 @@ jobs:
       - name: Setup environment (cached)
         uses: mamba-org/setup-micromamba@v2
         with:
-          environment-file: environment.yml
+          environment-file: 01_GitHub/environment.yml
           cache-environment: true
           cache-downloads: true
 
@@ -48,7 +48,7 @@ jobs:
       - name: Setup environment (cached)
         uses: mamba-org/setup-micromamba@v2
         with:
-          environment-file: environment.yml
+          environment-file: 01_GitHub/environment.yml
           cache-environment: true
           cache-downloads: true
 
