@@ -28,6 +28,7 @@ jobs:
           cache-downloads: true
 
       - name: Run full pipeline
+        shell: micromamba-shell {0}
         run: bash 01_GitHub/main.sh
 
       - name: Upload results
@@ -59,6 +60,7 @@ jobs:
           path: pipeline_results/
 
       - name: Run MultiQC
+        shell: micromamba-shell {0}
         run: multiqc pipeline_results -c 01_GitHub/data/multiqc_config.yaml -o multiqc_out
 
       # - name: Prepare Pages structure
