@@ -46,7 +46,11 @@ Check [the actions section](https://github.com/HCEMM/acceleration-toolbox/action
 
 ## 3. GitHub in collaboration
 
-Projects with multiple contributors require a more complex approach. In this section, multiple groups will be working on different parts of a pipeline, and we will be using GitHub to collaborate and manage our work. As explained in [1.](#1-the-version-control-system), we will be using the "fork and pull" workflow, which involves the following steps:
+Projects with multiple contributors require a more complex approach. In this section, multiple groups will be working on different parts of a pipeline, and we will be using GitHub to collaborate and manage our work. Right now, the pipeline is not working:
+
+![Pipeline](https://github.com/ORG/REPO/actions/workflows/github-pipeline-ci.yml/badge.svg)
+
+As explained in [1.](#1-the-version-control-system), we will be using the "fork and pull" workflow, which involves the following steps:
 
 1. [Create a fork of this repository](https://github.com/HCEMM/acceleration-toolbox/fork): you now have your own copy of the repository where you can make changes without affecting the original repository. But this repository is currently only on GitHub!
 
@@ -66,6 +70,15 @@ Testing code (also known as [Continuous Integration](https://en.wikipedia.org/wi
 ### 3.2. Your task
 
 We have multiple groups for multiple different tasks. Each group will be working on a different part of the pipeline, and you will be collaborating with your group members to complete the task.
+
+#### Current pipeline status
+
+![Reads Quality Check (Group 1)](...)
+![Reads Summary (Group 2)](...)
+![Annotation (Group 3)](...)
+![Gene Quantification (Group 4)](...)
+![Final Report (Group 5)](...)
+![Main](...)
 
 ------------------
 |Previous|Home|Next|

@@ -1,0 +1,17 @@
+custom_data:
+  seqkit_report:
+    file_format: "tsv"
+    section_name: "Reads Summary"
+    plot_type: "table"
+
+  diamond_summary:
+    file_format: "csv"
+    section_name: "Genes Counts"
+    plot_type: "table"
+
+sp:
+  seqkit_report:
+    fn: "seq_counts.tsv"
+
+  diamond_summary:
+    fn: "matches_summary.csv"

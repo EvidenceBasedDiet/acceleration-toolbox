@@ -1,0 +1,92 @@
+name: Group Validation CI
+
+on:
+  push:
+    branches:
+      - group1
+      - group2
+      - group3
+      - group4
+      - group5
+
+jobs:
+
+  qc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup environment (cached)
+        uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: 01_GitHub/environment.yml
+          cache-environment: true
+          cache-downloads: true
+
+      - name: Run QC step
+        run: bash 01_GitHub/scripts/01-qc.sh 01_GitHub/pipeline test_output 4
+
+  seqkit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup environment (cached)
+        uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: 01_GitHub/environment.yml
+          cache-environment: true
+          cache-downloads: true
+
+      - name: Run count step
+        run: bash 01_GitHub/scripts/02-count-seqs.sh test_output
+
+  annotation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup environment (cached)
+        uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: 01_GitHub/environment.yml
+          cache-environment: true
+          cache-downloads: true
+
+      - name: Run annotation step
+        run: bash 01_GitHub/scripts/03-annotation.sh test_output 01_GitHub/pipeline/db/db_trimmed.dmnd 4
+
+  build-matrix:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup environment (cached)
+        uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: 01_GitHub/environment.yml
+          cache-environment: true
+          cache-downloads: true
+
+      - name: Run build matrix
+        run: bash 01_GitHub/scripts/04-check-annotations.sh test_output
+
+  multiqc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup environment (cached)
+        uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: 01_GitHub/environment.yml
+          cache-environment: true
+          cache-downloads: true
+
+      - name: Run MultiQC
+        run: bash 01_GitHub/scripts/05-multiqc.sh test_output 01_GitHub/data/multiqc_config.yaml

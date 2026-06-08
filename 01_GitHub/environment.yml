@@ -7,8 +7,6 @@ channels:
 dependencies:
   - fastqc
   - multiqc
-  - cutadapt
-  - minimap2
-  - samtools
-  - blast
-  - python
+  - seqkit
+  - diamond
+  - pandas

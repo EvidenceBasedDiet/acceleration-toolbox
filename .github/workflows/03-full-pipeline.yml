@@ -1,0 +1,86 @@
+name: Full Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+
+  run-pipeline:
+    name: Full Pipeline
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup environment (cached)
+        uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+          cache-downloads: true
+
+      - name: Run full pipeline
+        run: bash main.sh
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-results
+          path: pipeline_results/
+
+  multiqc:
+    name: Generate MultiQC
+    needs: run-pipeline
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup environment (cached)
+        uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+          cache-downloads: true
+
+      - name: Download pipeline results
+        uses: actions/download-artifact@v4
+        with:
+          name: pipeline-results
+          path: pipeline_results/
+
+      - name: Run MultiQC
+        run: multiqc pipeline_results -c 01_GitHub/data/multiqc_config.yaml -o multiqc_out
+
+      # - name: Prepare Pages structure
+      #   run: |
+      #     mkdir -p site/multiqc-report
+      #     cp multiqc_out/multiqc_report.html site/multiqc-report/multiqc_report.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: multiqc_out
+
+  deploy:
+    name: Deploy GitHub Pages
+    needs: multiqc
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
