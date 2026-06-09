@@ -13,71 +13,41 @@ permissions:
 jobs:
 
   run-pipeline:
-    name: Full Pipeline
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
 
-      - name: Setup environment (cached)
+      - uses: actions/checkout@v4
+
+      - name: Setup environment
         uses: mamba-org/setup-micromamba@v2
         with:
           environment-file: 01_GitHub/environment.yml
           cache-environment: true
           cache-downloads: true
 
-      - name: Run full pipeline
+      - name: Run pipeline
         shell: micromamba-shell {0}
         run: |
           bash 01_GitHub/scripts/00-download-db.sh
           bash 01_GitHub/main.sh
 
-      - name: Upload results
-        uses: actions/upload-artifact@v4
-        with:
-          name: pipeline-results
-          path: pipeline_results/
-
-  multiqc:
-    name: Generate MultiQC
-    needs: run-pipeline
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup environment (cached)
-        uses: mamba-org/setup-micromamba@v2
-        with:
-          environment-file: 01_GitHub/environment.yml
-          cache-environment: true
-          cache-downloads: true
-
-      - name: Download pipeline results
-        uses: actions/download-artifact@v4
-        with:
-          name: pipeline-results
-          path: pipeline_results/
-
-      - name: Run MultiQC
-        shell: micromamba-shell {0}
-        run: multiqc pipeline_results -c 01_GitHub/data/multiqc_config.yaml -o multiqc_out
-
-      - name: Upload Pages artifact
+      - name: Upload MultiQC report
         uses: actions/upload-pages-artifact@v3
         with:
-          path: multiqc_out
+          path: 01_GitHub/results/multiqc_out
 
   deploy:
-    name: Deploy GitHub Pages
-    needs: multiqc
+    needs: pipeline
     runs-on: ubuntu-latest
 
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
+    permissions:
+      pages: write
+      id-token: write
 
     steps:
       - name: Deploy
