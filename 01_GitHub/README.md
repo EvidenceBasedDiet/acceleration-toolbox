@@ -71,14 +71,16 @@ Testing code (also known as [Continuous Integration](https://en.wikipedia.org/wi
 
 We have multiple groups for multiple different tasks. Each group will be working on a different part of the pipeline, and you will be collaborating with your group members to complete the task.
 
-#### Current pipeline status
+#### Groups
 
-![Reads Quality Check (Group 1)](...)
-![Reads Summary (Group 2)](...)
-![Annotation (Group 3)](...)
-![Gene Quantification (Group 4)](...)
-![Final Report (Group 5)](...)
-![Main](...)
+| Group | Task | Difficulty | Status |
+|---------|---------|---------|---------|
+| 1 | Reads Quality Check | Easy | ![Group1](https://github.com/HCEMM/acceleration-toolbox/actions/workflows/group1-ci.yml/badge.svg) |
+| 2 | Reads Summary | Hard | ![Group2](https://github.com/HCEMM/acceleration-toolbox/actions/workflows/group2-ci.yml/badge.svg) |
+| 3 | Annotation | Medium | ![Group3](https://github.com/HCEMM/acceleration-toolbox/actions/workflows/group3-ci.yml/badge.svg) |
+| 4 | Gene Quantification | Easy | ![Group4](https://github.com/HCEMM/acceleration-toolbox/actions/workflows/group4-ci.yml/badge.svg) |
+| 5 | Final Report | Medium | ![Group5](https://github.com/HCEMM/acceleration-toolbox/actions/workflows/group5-ci.yml/badge.svg) |
+| All Groups | Complete Pipeline | - | ![Main](https://github.com/HCEMM/acceleration-toolbox/actions/workflows/full-pipeline.yml/badge.svg) |
 
 ------------------
 |Previous|Home|Next|

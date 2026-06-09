@@ -1,0 +1,28 @@
+name: Group 3 CI
+
+on:
+  push:
+    branches:
+      - group3
+
+jobs:
+
+  annotation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup environment (cached)
+        uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: 01_GitHub/environment.yml
+          cache-environment: true
+          cache-downloads: true
+
+      - name: Run annotation step
+        shell: micromamba-shell {0}
+        run: |
+          bash 01_GitHub/scripts/00-download-db.sh
+          bash 01_GitHub/scripts/03-annotation.sh 01_GitHub/data test_output 01_GitHub/data/db_trimmed.dmnd 8
+  

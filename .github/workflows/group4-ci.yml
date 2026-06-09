@@ -1,0 +1,25 @@
+name: Group 4 CI
+
+on:
+  push:
+    branches:
+      - group4
+
+jobs:
+
+  build-matrix:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup environment (cached)
+        uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: 01_GitHub/environment.yml
+          cache-environment: true
+          cache-downloads: true
+
+      - name: Run build matrix
+        shell: micromamba-shell {0}
+        run: bash 01_GitHub/scripts/04-build-matrix.sh 01_GitHub/ci_input test_output
