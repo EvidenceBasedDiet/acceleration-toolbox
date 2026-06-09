@@ -42,7 +42,7 @@ Steps to generate your recently created profile in a webpage:
 4. Under "Source", select the branch you want to use (e.g., "main");
 5. Click "Save" and wait for the page to be published. You will receive a URL where your page is available (e.g., `https://<your-github-username>.github.io/`).
 
-Check [the actions section](https://github.com/HCEMM/acceleration-toolbox/actions) of your repo to see live the construciton of the website.
+Check [the actions section](https://github.com/HCEMM/acceleration-toolbox/actions) of your repo to see live the construction of the website.
 
 ## 3. GitHub in collaboration
 
