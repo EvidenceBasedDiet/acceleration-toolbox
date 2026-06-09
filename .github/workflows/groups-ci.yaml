@@ -8,6 +8,7 @@ on:
       - group3
       - group4
       - group5
+      - main
 
 jobs:
 
