@@ -43,4 +43,4 @@ if __name__ == "__main__":
     # check if the matrix file was created successfully
     if not isfile(f"{sys.argv[1]}/matches_summary.csv"):
         print("Error: matches_summary.csv was not created.")
-        sys.exit(1)    
+        sys.exit(1)

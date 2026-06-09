@@ -13,7 +13,10 @@ mkdir -p "$RESULTS_DIR"
 echo "Running annotation against database of glucocorticoid-responsive genes"
 
 for FILE in "$READS_DIR"/*.fastq.gz; 
-    do echo "Annotating file: $FILE"; diamond blastx -d "$DB" -q "$FILE" -o "$RESULTS_DIR"/$(basename "$FILE" .fastq.gz)_matches.tab --threads "$THREADS" --max-target-seqs "$MAX_TARGET_SEQS" --outfmt 6; 
+do 
+    echo "Annotating file: $FILE"
+    
+    diamond blastx -d "$DB" -q "$FILE" -o "$RESULTS_DIR"/$(basename "$FILE" .fastq.gz)_matches.tab --threads "$THREADS" --max-target-seqs "$MAX_TARGET_SEQS" --outfmt 6
 done
 
 # check if 12 annotation results were generated, and exit code 1 if not
