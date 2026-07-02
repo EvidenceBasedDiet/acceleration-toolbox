@@ -1,0 +1,9 @@
+#Run the whole nf-core/rnaseq pipeline with parameter file
+nextflow run nf-core/rnaseq -process.executor slurm -r 3.26.0 -profile apptainer -params-file nf-parameters.json
+
+#Resume if a process failed
+nextflow run nf-core/rnaseq -process.executor slurm -r 3.26.0 -profile apptainer -resume -params-file nf-parameters.json
+
+&Execute in the background
+nf-core-rnaseq]$ nextflow run nf-core/rnaseq -process.executor slurm -r 3.26.0 -profile apptainer -resume -params-file nf-parameters.json -bg > nf-core-rnaseq-params-run1.log
+  
