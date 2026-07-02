@@ -1,19 +1,18 @@
 ## Nextflow
 
-So far, you have built and containerized individual bioinformatics tools. Now, we will use Nextflow to stitch those isolated tools into a single, automated, and reproducible RNA-seq pipeline.
+In previous sessions, we containerized individual bioinformatics tools. Here, we will integrate those tools into an automated, reproducible Nextflow workflow.
 
-Our Complete Pipeline: 
-- FastQC: Quality control of raw reads
-- Trimmomatic: Adapter and quality trimming
-- Salmon: Transcriptome indexing and read quantification
-- MultiQC: Aggregating all logs and QC metrics into one report
-- R (Limma): Differential expression analysis
+**The Objective**: Build a collaborative RNA-seq pipeline consisting of FastQC, Trimmomatic, Salmon, MultiQC, and R (Limma).
 
-The Workspace:
-You are working in groups (1-4) collaboratively on the repository: [```HCEMM/rnaseq-nextflow```](https://github.com/HCEMM/rnaseq-nextflow).
+**The Workspace**: [```HCEMM/rnaseq-nextflow```](https://github.com/HCEMM/rnaseq-nextflow) repository (Groups 1-4).
 
-### Step 1: Understanding the Pipeline Architecture
-Before you write any code, let's look at how our Nextflow repository is structured. You will see two main structural files that act as the "brain" of our pipeline, alongside directories for our code and data.
+### Part 1: Pipeline Architecture
+A standard Nextflow repository relies on two central files to control execution and configuration, isolating the "how" from the "where."
+
+**Exapmple DAG architecture**
+
+<img width="691" height="686" alt="flowchart" src="https://github.com/user-attachments/assets/78237e23-4b0c-42f4-bab8-e6e8cd9f037a" />
+
 
 Directory Overview:
 - ```main.nf``` (The master script)
@@ -24,11 +23,11 @@ Directory Overview:
 
 -----------------------
 
-```nextflow.config```
+1. ```nextflow.config``` (Infrastructure and Resources)
 
-This file tells Nextflow how to execute the pipeline on your specific infrastructure. It defines job scheduling (SLURM), allocates resources (CPUs and RAM) to specific processes, and crucially, tells Nextflow to use Apptainer to run your Docker containers.
+This file dictates execution rules: job scheduling, CPU/RAM allocation, and container integration.
 
-<details><summary>Show me the config file!</summary>
+<details><summary>Show me the ```nextflow.config``` file!</summary>
     
 ```
 // 1. Executor Settings (HPC Job Scheduler)
@@ -79,11 +78,11 @@ apptainer {
 
 ----------
 
-```main.nf```
+2. ```main.nf``` (The Master Workflow)
 
-This is the master script. Notice that it **does not do any bioinformatics analysis itself**. Instead, it defines the channels (the data pathways) and controls the execution order. It imports the individual modules your groups are working on and connects the outputs of one tool directly to the inputs of the next.
+This script orchestrates data flow using *Nextflow Channels*. It imports modules and wires tool outputs to downstream inputs.
 
-<details><summary>Show me the main Nextflow file!</summary>
+<details><summary>Show me the ```main.nf``` file!</summary>
     
 ```
 #!/usr/bin/env nextflow
@@ -150,21 +149,30 @@ workflow {
 
 ----------------
 
-### Step 2: Nextflow Directives & Data Types
+### Part 2: Writing Nextflow Processes | Nextflow Directives & Data Types
+
+A Nextflow process wraps your Bash or R scripts into reusable modules. To write effective modules, you must understand Nextflow directives and data types.
+
 **1. Directives and Task Variables**
 
 Directives control the environment and behavior of your specific process.
 
 **A. Global Implicit Variables**
-- ```publishDir```: By default, Nextflow hides all generated files in temporary working directories. If you want to keep a file (like a final report or a BAM file), you must use publishDir to route it to your results folder.
+|Variable|Function|Example|
+|---------|--------|-------|
+|```publishDir```|Saves specific output files to your final results folder. (Otherwise, files remain hidden in temporary directories).|```publishDir "${params.outdir}/fastqc", mode: 'copy'```|
+|```launchDir```|This points to the directory where the user actually typed ```nextflow run ...``` in their terminal.| ```[user@server: ~/my/folder] nextflow run main.nf```|
+|```workDir```| Points to the path of the temporary scratch directory (usually ```work/```)| e.g. ```$projectDir/work/3f/55560c68752026892c4267c4a42105/```|
+|```params```| The global parameter dictionary. Any variable prefixed with ```params.``` can be dynamically overridden by the user from the command line using ```--reads```| e.g ```params.reads```|
 
-> Example: ```publishDir "${params.outdir}/fastqc", mode: 'copy'```
-- ```launchDir```: This points to the directory where the user actually typed ```nextflow run ...``` in their terminal.
-- ```workDir```: Points to the path of the temporary scratch directory (usually ```work/```)
-- ```params```: The global parameter dictionary. Any variable prefixed with ```params.``` (like ```params.reads```) can be dynamically overridden by the user from the command line using ```--reads```.
+**B. Essential Directives**
+|Directive|Function|Example|
+|---------|--------|-------|
+|```task.cpus``` and ```task.memory```|These are dynamic global variables. Instead of hardcoding threads 4 in your Bash script, use ${task.cpus}.| e.g. ```fastqc -t ${task.cpus} reads.fastq.gz```|
+|```tag```|Customizes terminal logs to show exactly which sample is currently processing.
+|
+|
 
-**B. The task's implicit variables**
-- ```task.cpus``` and ```task.memory```: These are dynamic global variables. Instead of hardcoding threads 4 in your Bash script, use ${task.cpus}. Nextflow pulls the value directly from your nextflow.config file, making your code highly scalable.
 
 **C. Process Directives**
 - ```tag```: This is used for logging. Instead of Nextflow printing [7b/3a1c9f] process > FASTQC (1) to the terminal, you can add tag "Running FastQC on $sample_id". The terminal will then print exactly which sample is currently being processed.
