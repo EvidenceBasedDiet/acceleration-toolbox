@@ -1,0 +1,7 @@
+{
+    "input": "samplesheet.csv",
+    "outdir": "results/rnaseq_output",
+    "genome": "GRCh38",
+    "featurecounts_group_type": "gene_id",
+    "skip_biotype_qc": true
+}
