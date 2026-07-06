@@ -14,4 +14,4 @@ bash 01_GitHub/scripts/.sh "$WORKING_DIR"/data "$OUTPUT_DIR" "$WORKING_DIR/data/
 
 bash 01_GitHub/scripts/.sh "$OUTPUT_DIR" "$OUTPUT_DIR"
 
-bash 01_GitHub/scripts/.sh "$OUTPUT_DIR" "$OUTPUT_DIR" "$WORKING_DIR/data/multiqc_config.yaml"
+bash 01_GitHub/scripts/05-build-report.sh "$OUTPUT_DIR" "$OUTPUT_DIR" "$WORKING_DIR/data/multiqc_config.yaml"
